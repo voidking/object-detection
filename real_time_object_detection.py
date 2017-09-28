@@ -16,6 +16,8 @@ ap.add_argument("-p", "--prototxt", required=True,
 	help="path to Caffe 'deploy' prototxt file")
 ap.add_argument("-m", "--model", required=True,
 	help="path to Caffe pre-trained model")
+ap.add_argument("-v", "--video", required=True,
+	help="path to Caffe video file")
 ap.add_argument("-c", "--confidence", type=float, default=0.2,
 	help="minimum probability to filter weak detections")
 args = vars(ap.parse_args())
@@ -37,7 +39,8 @@ net = cv2.dnn.readNetFromCaffe(args["prototxt"], args["model"])
 print("[INFO] starting video stream...")
 # vs = VideoStream(src=0).start()
 # vs =cv2.VideoCapture('C:\\Users\\voidking\\Desktop\\real-time-object-detection\\test_video.flv')
-vs =cv2.VideoCapture('./test_video.flv')
+# vs =cv2.VideoCapture('./test_video.flv')
+vs =cv2.VideoCapture(args["video"])
 time.sleep(2.0)
 fps = FPS().start()
 
