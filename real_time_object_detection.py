@@ -35,7 +35,9 @@ net = cv2.dnn.readNetFromCaffe(args["prototxt"], args["model"])
 # initialize the video stream, allow the cammera sensor to warmup,
 # and initialize the FPS counter
 print("[INFO] starting video stream...")
-vs = VideoStream(src=0).start()
+# vs = VideoStream(src=0).start()
+# vs =cv2.VideoCapture('C:\\Users\\voidking\\Desktop\\real-time-object-detection\\test_video.flv')
+vs =cv2.VideoCapture('./test_video.flv')
 time.sleep(2.0)
 fps = FPS().start()
 
@@ -43,9 +45,16 @@ fps = FPS().start()
 while True:
 	# grab the frame from the threaded video stream and resize it
 	# to have a maximum width of 400 pixels
-	frame = vs.read()
-	frame = imutils.resize(frame, width=400)
+	# frame = vs.read()
+	# frame = imutils.resize(frame, width=400)
 
+	# grab the frame from the threaded video file stream
+	(grabbed,frame) = vs.read()
+	# if the frame was not grabbed, then we have reached the end
+	# of the stream
+	if not grabbed:
+		break
+	frame = imutils.resize(frame, width=800)
 	# grab the frame dimensions and convert it to a blob
 	(h, w) = frame.shape[:2]
 	blob = cv2.dnn.blobFromImage(cv2.resize(frame, (300, 300)),
